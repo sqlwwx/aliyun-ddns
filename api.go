@@ -7,9 +7,11 @@ import (
 
 func List(domain string) {
 	client := dns.NewClient(config.AccessKeyId, config.AccessKeySec)
-	res, err := client.DescribeDomainRecords(&dns.DescribeDomainRecordsArgs{
+	describeArgs := dns.DescribeDomainRecordsArgs{
 		DomainName: domain,
-	})
+	}
+	describeArgs.PageSize = 500
+	res, err := client.DescribeDomainRecords(&describeArgs)
 	if err != nil {
 	}
 
@@ -27,4 +29,14 @@ func Update(recordId, rr, value string) error {
 		Type:     dns.ARecord,
 	})
 	return err
+}
+
+func FindById(recordId string) (response *dns.DescribeDomainRecordInfoResponse, err error) {
+	client := dns.NewClient(config.AccessKeyId, config.AccessKeySec)
+	describeArgs := dns.DescribeDomainRecordInfoArgs{
+		RecordId: recordId,
+	}
+	return client.DescribeDomainRecordInfo(
+		&describeArgs,
+	)
 }

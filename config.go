@@ -14,6 +14,7 @@ type Config struct {
 	DomainName   string `域名`
 	RR           string `RR`
 	RecordId     string `RecordId`
+	UsePublicIp  bool   `使用公网ip`
 }
 
 func loadConfig() Config {
@@ -28,5 +29,9 @@ func loadConfig() Config {
 	config.DomainName, _ = cfg.GetValue("record", "DomainName")
 	config.RR, _ = cfg.GetValue("record", "RR")
 	config.RecordId, _ = cfg.GetValue("record", "Id")
+	config.UsePublicIp, err = cfg.Bool("record", "UsePublicIp")
+	if err != nil {
+		log.Println("load config failed", err)
+	}
 	return config
 }

@@ -1,8 +1,10 @@
 package main
 
 import (
+	"io/ioutil"
 	"log"
 	"net"
+	"net/http"
 	"os/exec"
 	"strings"
 )
@@ -22,6 +24,21 @@ func GetLocalIP() string {
 	}
 	return ""
 }
+
+func GetPublicIp() string {
+	url := "http://whatismyip.akamai.com/"
+	resp, err := http.Get(url)
+	if err != nil {
+		panic(err)
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		panic(err)
+	}
+	return strings.TrimSpace(string(body))
+}
+
 func GetDomainIp(dnsServer string) string {
 	cmd := exec.Command(`dig`, `@223.5.5.5`, config.RR+"."+config.DomainName, `+short`)
 	out, err := cmd.CombinedOutput()
