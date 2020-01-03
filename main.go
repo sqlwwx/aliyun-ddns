@@ -18,7 +18,7 @@ func main() {
 			resp, _ := FindById(config.RecordId)
 			log.Println(resp.Value)
 		} else if command == "publicIp" {
-			log.Println(GetPublicIp())
+		  log.Println(GetPublicIp())
 		} else if command == "internalIp" {
 			log.Println(GetLocalIP())
 		}
@@ -45,6 +45,6 @@ func checkAndUpdate() {
 		log.Println("Need not to update, current IP: ", currentIp)
 	} else {
 		log.Println("startUpdate")
-		log.Println(Update(config.RecordId, config.RR, currentIp))
+		log.Println(Update(config.RecordId, config.RR, currentIp, config.Type))
 	}
 }

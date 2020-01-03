@@ -25,8 +25,7 @@ func GetLocalIP() string {
 	return ""
 }
 
-func GetPublicIp() string {
-	url := "http://whatismyip.akamai.com/"
+func DoRequest(url string) string {
 	resp, err := http.Get(url)
 	if err != nil {
 		panic(err)
@@ -37,6 +36,22 @@ func GetPublicIp() string {
 		panic(err)
 	}
 	return strings.TrimSpace(string(body))
+}
+
+func GetPublicIpv6() string {
+	return DoRequest("https://api6.ipify.org")
+}
+
+func GetPublicIpv4() string {
+  return DoRequest("https://api.ipify.org")
+}
+
+func GetPublicIp() string {
+  if config.Type == "A" {
+    return GetPublicIpv4()
+  } else {
+    return GetPublicIpv6()
+  }
 }
 
 func GetDomainIp(dnsServer string) string {

@@ -20,13 +20,13 @@ func List(domain string) {
 	}
 }
 
-func Update(recordId, rr, value string) error {
+func Update(recordId, rr, value, recordType string) error {
 	client := dns.NewClient(config.AccessKeyId, config.AccessKeySec)
 	_, err := client.UpdateDomainRecord(&dns.UpdateDomainRecordArgs{
 		RecordId: recordId,
 		RR:       rr,
 		Value:    value,
-		Type:     dns.ARecord,
+		Type:     recordType,
 	})
 	return err
 }
