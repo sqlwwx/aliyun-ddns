@@ -39,11 +39,11 @@ func DoRequest(url string) string {
 }
 
 func GetPublicIpv6() string {
-	return DoRequest("https://api6.ipify.org")
+  return DoRequest("http://ipv6.whatismyip.akamai.com/")
 }
 
 func GetPublicIpv4() string {
-  return DoRequest("https://api.ipify.org")
+  return DoRequest("http://whatismyip.akamai.com/")
 }
 
 func GetPublicIp() string {
