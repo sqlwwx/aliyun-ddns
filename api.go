@@ -13,6 +13,7 @@ func List(domain string) {
 	describeArgs.PageSize = 500
 	res, err := client.DescribeDomainRecords(&describeArgs)
 	if err != nil {
+		panic(err)
 	}
 
 	for _, v := range res.DomainRecords.Record {
